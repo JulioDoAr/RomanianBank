@@ -5,8 +5,8 @@ import java.util.List;
 
 import exceptions.DeposeException;
 import ro.uvt.dp.accounts.Account;
-import ro.uvt.dp.accounts.Account.TYPE;
 import ro.uvt.dp.accounts.AccountBuilder;
+import ro.uvt.dp.accounts.AccountType;
 
 public class Bank {
 
@@ -30,17 +30,17 @@ public class Bank {
 		return null;
 	}
 
-	public boolean addAccount(String clientName, TYPE type, String accountNumber) {
-		return addAccount(clientName, type, accountNumber, 0);
+	public boolean addAccount(String clientName, AccountType type) {
+		return addAccount(clientName, type, 0);
 	}
 
-	public boolean addAccount(String clientName, TYPE type, String accountNumber, double initialDeposit) {
+	public boolean addAccount(String clientName, AccountType type, double initialDeposit) {
 		Client client = getClient(clientName);
 
 		if (client != null) {
 			Account account;
 			try {
-				account = AccountBuilder.build(type, initialDeposit, accountNumber);
+				account = AccountBuilder.build(type, initialDeposit);
 				client.addAccount(account);
 			} catch (DeposeException e) {
 				System.out.println(e.getMessage());
