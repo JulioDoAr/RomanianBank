@@ -9,5 +9,5 @@ public interface Operations {
 
 	public void depose(double amount) throws DeposeException;
 
-	public void retrieve(double amount);
+	public void retrieve(double amount) throws DeposeException;
 }

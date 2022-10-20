@@ -20,11 +20,13 @@ public abstract class Account implements Operations, Transfer {
 
 	public void depose(double amount) throws DeposeException {
 		if (amount < 0)
-			throw new DeposeException("Amount less than 0");
+			throw new DeposeException();
 		this.amount += amount;
 	}
 
-	public void retrieve(double amount) {
+	public void retrieve(double amount) throws DeposeException {
+		if (amount < 0)
+			throw new DeposeException();
 		this.amount -= amount;
 	}
 

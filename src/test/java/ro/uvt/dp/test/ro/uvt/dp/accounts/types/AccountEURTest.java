@@ -3,6 +3,7 @@ package ro.uvt.dp.test.ro.uvt.dp.accounts.types;
 import org.junit.Test;
 
 import exceptions.DeposeException;
+import ro.uvt.dp.accounts.Account;
 import ro.uvt.dp.accounts.AccountBuilder;
 import ro.uvt.dp.accounts.AccountType;
 
@@ -24,8 +25,13 @@ public class AccountEURTest {
 		AccountBuilder.build(AccountType.EUR, -1234);
 	}
 
+	@Test(expected = DeposeException.class)
+	public void test_CreationWithoutAmount() throws DeposeException {
+		AccountBuilder.build(AccountType.EUR);
+	}
+
 	public void test_Depose() throws DeposeException {
-		AccountBuilder.build(AccountType.EUR, -1234);
+		Account a = AccountBuilder.build(AccountType.EUR, 1234);
 	}
 
 }

@@ -42,6 +42,10 @@ public class AccountBuilder {
 		return "RON" + number;
 	}
 
+	public static Account build(AccountType type) throws DeposeException {
+		return build(type, 0);
+	}
+
 	public static Account build(AccountType type, double initialDeposit) throws DeposeException {
 		Account account = null;
 		if (type == AccountType.EUR)
