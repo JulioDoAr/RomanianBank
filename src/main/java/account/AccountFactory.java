@@ -1,28 +1,35 @@
-package ro.uvt.dp.accounts;
+package account;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import account.types.AccountEUR;
+import account.types.AccountRON;
 import exceptions.NegativeAmountException;
-import ro.uvt.dp.accounts.types.AccountEUR;
-import ro.uvt.dp.accounts.types.AccountRON;
 
-public class AccountBuilder {
+public class AccountFactory {
 
+	private static AccountFactory instance = null;
 	private static List<Integer> generatedEURNumbers;
 	private static List<Integer> generatedRONNumbers;
 
-	public AccountBuilder() {
+	private AccountFactory() {
 		generatedEURNumbers = new ArrayList<Integer>();
 		generatedRONNumbers = new ArrayList<Integer>();
 	}
 
-	private static int getRandomNumber() {
+	public static AccountFactory getInstance() {
+		if (instance == null)
+			instance = new AccountFactory();
+		return instance;
+	}
+
+	private int getRandomNumber() {
 		return ThreadLocalRandom.current().nextInt(100, 1000);
 	}
 
-	private static String generateEURAccountNumber() {
+	private String generateEURAccountNumber() {
 		int number;
 		do {
 			number = getRandomNumber();
@@ -32,7 +39,7 @@ public class AccountBuilder {
 		return "EUR" + number;
 	}
 
-	private static String generateRONAccountNumber() {
+	private String generateRONAccountNumber() {
 		int number;
 		do {
 			number = getRandomNumber();
@@ -42,11 +49,11 @@ public class AccountBuilder {
 		return "RON" + number;
 	}
 
-	public static Account build(AccountType type) throws NegativeAmountException {
+	public Account build(AccountType type) throws NegativeAmountException {
 		return build(type, 0);
 	}
 
-	public static Account build(AccountType type, double initialDeposit) throws NegativeAmountException {
+	public Account build(AccountType type, double initialDeposit) throws NegativeAmountException {
 		Account account = null;
 		if (type == AccountType.EUR)
 			account = new AccountEUR(generateEURAccountNumber(), initialDeposit);

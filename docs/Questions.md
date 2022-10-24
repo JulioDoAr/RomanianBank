@@ -1,0 +1,3 @@
+# Questions
+
+About the error controls... ¿Is it better to return true/false, null objects or a lot of exceptions? Maybe at the end, one method can return 3 or 4 exception types...
