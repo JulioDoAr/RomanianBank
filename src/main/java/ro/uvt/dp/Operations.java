@@ -1,13 +1,14 @@
 package ro.uvt.dp;
 
-import exceptions.DeposeException;
+import exceptions.NegativeAmountException;
+import exceptions.NotEnoughAmountException;
 
 public interface Operations {
 	public double getTotalAmount();
 
 	public double getInterest();
 
-	public void depose(double amount) throws DeposeException;
+	public void depose(double amount) throws NegativeAmountException;
 
-	public void retrieve(double amount) throws DeposeException;
+	public void retrieve(double amount) throws NegativeAmountException, NotEnoughAmountException;
 }

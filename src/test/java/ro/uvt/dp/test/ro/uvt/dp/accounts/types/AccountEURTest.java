@@ -1,37 +1,65 @@
 package ro.uvt.dp.test.ro.uvt.dp.accounts.types;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
-import exceptions.DeposeException;
+import exceptions.NegativeAmountException;
 import ro.uvt.dp.accounts.Account;
 import ro.uvt.dp.accounts.AccountBuilder;
 import ro.uvt.dp.accounts.AccountType;
+import ro.uvt.dp.accounts.types.AccountEUR;
 
 public class AccountEURTest {
 
+	AccountEUR account;
+
 	@Test
-	public void test_CreationWithPositiveAmount() {
-		try {
-			AccountBuilder.build(AccountType.EUR, 457875);
-			assert true;
-		} catch (DeposeException e) {
-			e.printStackTrace();
-			assert false;
-		}
+	public void test_CreationWithPositiveAmount() throws NegativeAmountException {
+		Account a = AccountBuilder.build(AccountType.EUR, 457875);
+		double expectedAmount = 457875 * a.getInterest();
+		assertEquals(a.getTotalAmount(), expectedAmount, 0.001);
 	}
 
-	@Test(expected = DeposeException.class)
-	public void test_CreationWithNegativeAmount() throws DeposeException {
+	@Test(expected = NegativeAmountException.class)
+	public void test_CreationWithNegativeAmount() throws NegativeAmountException {
 		AccountBuilder.build(AccountType.EUR, -1234);
 	}
 
-	@Test(expected = DeposeException.class)
-	public void test_CreationWithoutAmount() throws DeposeException {
-		AccountBuilder.build(AccountType.EUR);
+	@Test
+	public void test_CreationWithoutAmount() throws NegativeAmountException {
+		Account a = AccountBuilder.build(AccountType.EUR);
+		double expectedAmount = 0 * a.getInterest();
+		assertEquals(a.getTotalAmount(), expectedAmount, 0.001);
 	}
 
-	public void test_Depose() throws DeposeException {
-		Account a = AccountBuilder.build(AccountType.EUR, 1234);
+	@Test
+	public void test_DeposePositiveAmount() throws NegativeAmountException {
+		Account a = AccountBuilder.build(AccountType.EUR);
+		a.depose(100);
+		double expectedAmount = 100 * a.getInterest();
+		assertEquals(a.getTotalAmount(), expectedAmount, 0.001);
+	}
+
+	@Test(expected = NegativeAmountException.class)
+	public void test_DeposeNegativeAmount() throws NegativeAmountException {
+		Account a = AccountBuilder.build(AccountType.EUR);
+		a.depose(-100);
+	}
+
+	@Test
+	public void test_AccountCodeLenght() throws NegativeAmountException {
+		Account a = AccountBuilder.build(AccountType.EUR);
+		String code = a.getCode();
+		assertEquals(code.length(), 6);
+	}
+
+	@Test
+	public void test_AccountCode_StartsWithEUR() throws NegativeAmountException {
+		Account a = AccountBuilder.build(AccountType.EUR);
+		String code = a.getCode();
+		assertTrue(code.startsWith("EUR"));
 	}
 
 }

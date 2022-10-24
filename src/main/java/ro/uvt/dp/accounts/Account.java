@@ -1,16 +1,17 @@
 package ro.uvt.dp.accounts;
 
-import exceptions.DeposeException;
+import exceptions.NegativeAmountException;
+import exceptions.NotEnoughAmountException;
 import ro.uvt.dp.Operations;
 import ro.uvt.dp.Transfer;
 
 public abstract class Account implements Operations, Transfer {
 
-	protected String accountCode = null;
+	protected String code = null;
 	protected double amount = 0;
 
-	protected Account(String numarCont, double initialDeposit) throws DeposeException {
-		this.accountCode = numarCont;
+	protected Account(String numarCont, double initialDeposit) throws NegativeAmountException {
+		this.code = numarCont;
 		depose(initialDeposit);
 	}
 
@@ -18,28 +19,30 @@ public abstract class Account implements Operations, Transfer {
 		return amount + amount * getInterest();
 	}
 
-	public void depose(double amount) throws DeposeException {
+	public void depose(double amount) throws NegativeAmountException {
 		if (amount < 0)
-			throw new DeposeException();
+			throw new NegativeAmountException();
 		this.amount += amount;
 	}
 
-	public void retrieve(double amount) throws DeposeException {
+	public void retrieve(double amount) throws NegativeAmountException, NotEnoughAmountException {
 		if (amount < 0)
-			throw new DeposeException();
+			throw new NegativeAmountException();
+		if (this.amount < amount)
+			throw new NotEnoughAmountException();
 		this.amount -= amount;
 	}
 
 	@Override
 	public String toString() {
-		return "Account: code=" + accountCode + ", amount=" + amount;
+		return "Account: code=" + code + ", amount=" + amount;
 	}
 
-	public String getAccountCode() {
-		return accountCode;
+	public String getCode() {
+		return code;
 	}
 
-	public void transfer(Account c, double s) throws DeposeException {
+	public void transfer(Account c, double s) throws NegativeAmountException, NotEnoughAmountException {
 		c.retrieve(s);
 		depose(s);
 	}

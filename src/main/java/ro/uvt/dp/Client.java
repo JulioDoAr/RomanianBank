@@ -23,9 +23,13 @@ public class Client {
 
 	public Account getAccount(String accountCode) {
 		for (Account account : accounts)
-			if (account.getAccountCode().equals(accountCode))
+			if (account.getCode().equals(accountCode))
 				return account;
 		return null;
+	}
+
+	public List<Account> getAccounts() {
+		return accounts;
 	}
 
 	@Override

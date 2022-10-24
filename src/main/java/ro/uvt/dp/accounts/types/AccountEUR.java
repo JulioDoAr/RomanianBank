@@ -1,11 +1,11 @@
 package ro.uvt.dp.accounts.types;
 
-import exceptions.DeposeException;
+import exceptions.NegativeAmountException;
 import ro.uvt.dp.accounts.Account;
 
 public class AccountEUR extends Account {
 
-	public AccountEUR(String number, double suma) throws DeposeException {
+	public AccountEUR(String number, double suma) throws NegativeAmountException {
 		super(number, suma);
 	}
 

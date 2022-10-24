@@ -1,8 +1,9 @@
 package ro.uvt.dp;
 
-import exceptions.DeposeException;
+import exceptions.NegativeAmountException;
+import exceptions.NotEnoughAmountException;
 import ro.uvt.dp.accounts.Account;
 
 public interface Transfer {
-	public void transfer(Account c, double s) throws DeposeException;
+	public void transfer(Account account, double amount) throws NegativeAmountException, NotEnoughAmountException;
 }

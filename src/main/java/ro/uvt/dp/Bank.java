@@ -3,7 +3,7 @@ package ro.uvt.dp;
 import java.util.ArrayList;
 import java.util.List;
 
-import exceptions.DeposeException;
+import exceptions.NegativeAmountException;
 import ro.uvt.dp.accounts.Account;
 import ro.uvt.dp.accounts.AccountBuilder;
 import ro.uvt.dp.accounts.AccountType;
@@ -42,7 +42,7 @@ public class Bank {
 			try {
 				account = AccountBuilder.build(type, initialDeposit);
 				client.addAccount(account);
-			} catch (DeposeException e) {
+			} catch (NegativeAmountException e) {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
 				return false;
