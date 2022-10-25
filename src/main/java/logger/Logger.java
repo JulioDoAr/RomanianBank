@@ -85,4 +85,16 @@ public class Logger implements OutputOperation {
 		for (OutputOperation operation : operations)
 			operation.writeLine(message, params);
 	}
+
+	public void write(Object obj) {
+		for (OutputOperation operation : operations)
+			operation.write(obj);
+
+	}
+
+	public void writeLine(Object obj) {
+		for (OutputOperation operation : operations)
+			operation.writeLine(obj);
+
+	}
 }

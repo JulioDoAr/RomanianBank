@@ -1,4 +1,4 @@
-package general;
+package account.operations;
 
 import account.Account;
 import exceptions.NegativeAmountException;

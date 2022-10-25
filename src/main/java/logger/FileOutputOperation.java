@@ -87,7 +87,24 @@ public class FileOutputOperation implements OutputOperation {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
 
+	public void write(Object obj) {
+		try {
+			writer.write(obj.toString());
+			writer.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void writeLine(Object obj) {
+		try {
+			writer.write(obj.toString() + "/n");
+			writer.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

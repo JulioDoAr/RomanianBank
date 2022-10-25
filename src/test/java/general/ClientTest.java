@@ -7,8 +7,8 @@ import org.junit.Test;
 
 import account.AccountFactory;
 import account.AccountType;
+import client.Client;
 import exceptions.NegativeAmountException;
-import general.Client;
 
 public class ClientTest {
 

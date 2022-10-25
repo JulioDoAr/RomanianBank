@@ -6,6 +6,7 @@ import java.util.List;
 import account.Account;
 import account.AccountFactory;
 import account.AccountType;
+import client.Client;
 import exceptions.ClientNotFoundException;
 import logger.Logger;
 
@@ -22,11 +23,9 @@ public class Bank {
 	}
 
 	public void addClient(String name, String address) {
-		log.writeLine("");
 		Client c = new Client(name, address);
 		clients.add(c);
-		log.write("Client added.");
-		log.writeLine(c.toString());
+		log.writeLine("Client added. %s", c.toString());
 	}
 
 	public Client getClient(String name) throws ClientNotFoundException {

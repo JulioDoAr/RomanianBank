@@ -30,7 +30,14 @@ public class ConsoleOutputOperation implements OutputOperation {
 
 	public void writeLine(String message, Object... params) {
 		System.out.println(String.format(message, params));
+	}
 
+	public void write(Object obj) {
+		System.out.print(obj.toString());
+	}
+
+	public void writeLine(Object obj) {
+		System.out.println(obj.toString());
 	}
 
 }

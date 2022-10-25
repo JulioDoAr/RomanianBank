@@ -1,6 +1,7 @@
-package general;
+package client;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import account.Account;
@@ -10,10 +11,16 @@ public class Client {
 	private String name;
 	private String address;
 	private List<Account> accounts;
+	private Date birth;
 
 	public Client(String name, String address) {
+		this(name, address, null);
+	}
+
+	public Client(String name, String address, Date birth) {
 		this.name = name;
 		this.address = address;
+		this.birth = birth;
 		accounts = new ArrayList<Account>();
 	}
 
@@ -51,5 +58,13 @@ public class Client {
 
 	public void setName(String nume) {
 		this.name = nume;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public Date getBirth() {
+		return birth;
 	}
 }

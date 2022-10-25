@@ -29,6 +29,13 @@ public interface OutputOperation {
 	void write(String message, Object... params);
 
 	/**
+	 * Write the object converted to String
+	 *
+	 * @param obj The object.
+	 */
+	void write(Object obj);
+
+	/**
 	 * Write the message.
 	 *
 	 * @param message Message
@@ -42,6 +49,13 @@ public interface OutputOperation {
 	 * @param params  Objects to add to the template.
 	 */
 	void writeLine(String message, Object... params);
+
+	/**
+	 * Write the object converted to String
+	 *
+	 * @param obj The object.
+	 */
+	void writeLine(Object obj);
 
 	/**
 	 * Do the actions needed to finish the process of write.

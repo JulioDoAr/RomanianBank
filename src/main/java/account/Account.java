@@ -1,9 +1,9 @@
 package account;
 
+import account.operations.Operations;
+import account.operations.Transfer;
 import exceptions.NegativeAmountException;
 import exceptions.NotEnoughAmountException;
-import general.Operations;
-import general.Transfer;
 
 public abstract class Account implements Operations, Transfer {
 

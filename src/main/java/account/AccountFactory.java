@@ -8,21 +8,28 @@ import account.types.AccountEUR;
 import account.types.AccountRON;
 import exceptions.NegativeAmountException;
 
+/**
+ * Singleton
+ * 
+ * @author Julio Dom´inguez Arjona
+ *
+ */
 public class AccountFactory {
 
 	private static AccountFactory instance = null;
-	private static List<Integer> generatedEURNumbers;
-	private static List<Integer> generatedRONNumbers;
-
-	private AccountFactory() {
-		generatedEURNumbers = new ArrayList<Integer>();
-		generatedRONNumbers = new ArrayList<Integer>();
-	}
 
 	public static AccountFactory getInstance() {
 		if (instance == null)
 			instance = new AccountFactory();
 		return instance;
+	}
+
+	private List<Integer> generatedEURNumbers;
+	private List<Integer> generatedRONNumbers;
+
+	private AccountFactory() {
+		generatedEURNumbers = new ArrayList<Integer>();
+		generatedRONNumbers = new ArrayList<Integer>();
 	}
 
 	private int getRandomNumber() {
