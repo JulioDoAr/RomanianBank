@@ -3,40 +3,47 @@ package account.types;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import account.Account;
-import account.AccountFactory;
-import account.AccountType;
-import account.types.AccountRON;
+import account.factory.AccountFactory;
+import account.factory.AccountRONFactory;
 import exceptions.NegativeAmountException;
 
 public class AccountRONTest {
 
 	AccountRON account;
 
+	AccountFactory builder;
+
+	@BeforeClass
+	public void beforeClass() {
+		builder = AccountRONFactory.getInstance();
+	}
+
 	@Test
 	public void test_CreationWithPositiveAmount() throws NegativeAmountException {
-		Account a = AccountFactory.getInstance().build(AccountType.RON, 457875);
+		Account a = builder.build(457875);
 		double expectedAmount = 457875 * a.getInterest() + 457875;
 		assertEquals(a.getTotalAmount(), expectedAmount, 0.001);
 	}
 
 	@Test(expected = NegativeAmountException.class)
 	public void test_CreationWithNegativeAmount() throws NegativeAmountException {
-		AccountFactory.getInstance().build(AccountType.RON, -1234);
+		builder.build(-1234);
 	}
 
 	@Test
 	public void test_CreationWithoutAmount() throws NegativeAmountException {
-		Account a = AccountFactory.getInstance().build(AccountType.RON);
+		Account a = builder.build();
 		double expectedAmount = 0 * a.getInterest();
 		assertEquals(a.getTotalAmount(), expectedAmount, 0.001);
 	}
 
 	@Test
 	public void test_DeposePositiveAmount() throws NegativeAmountException {
-		Account a = AccountFactory.getInstance().build(AccountType.RON);
+		Account a = builder.build();
 		a.depose(100);
 		double expectedAmount = 100 * a.getInterest() + 100;
 		assertEquals(a.getTotalAmount(), expectedAmount, 0.001);
@@ -44,33 +51,33 @@ public class AccountRONTest {
 
 	@Test(expected = NegativeAmountException.class)
 	public void test_DeposeNegativeAmount() throws NegativeAmountException {
-		Account a = AccountFactory.getInstance().build(AccountType.RON);
+		Account a = builder.build();
 		a.depose(-100);
 	}
 
 	@Test
 	public void test_AccountCodeLenght() throws NegativeAmountException {
-		Account a = AccountFactory.getInstance().build(AccountType.RON);
+		Account a = builder.build();
 		String code = a.getCode();
 		assertEquals(code.length(), 6);
 	}
 
 	@Test
 	public void test_AccountCode_StartsWithRON() throws NegativeAmountException {
-		Account a = AccountFactory.getInstance().build(AccountType.RON);
+		Account a = builder.build();
 		String code = a.getCode();
 		assertTrue(code.startsWith("RON"));
 	}
 
 	@Test
 	public void test_Interest_LessThan500() throws NegativeAmountException {
-		Account a = AccountFactory.getInstance().build(AccountType.RON);
+		Account a = builder.build();
 		assertEquals(a.getInterest(), 0.03, 0.001);
 	}
 
 	@Test
 	public void test_Interest_500OrMore() throws NegativeAmountException {
-		Account a = AccountFactory.getInstance().build(AccountType.RON, 500);
+		Account a = builder.build(500);
 		assertEquals(a.getInterest(), 0.08, 0.001);
 	}
 }

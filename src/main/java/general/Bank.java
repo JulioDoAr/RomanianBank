@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import account.Account;
-import account.AccountFactory;
 import account.AccountType;
+import account.factory.AccountEURFactory;
+import account.factory.AccountRONFactory;
 import client.Client;
 import exceptions.ClientNotFoundException;
 import logger.Logger;
@@ -40,12 +41,20 @@ public class Bank {
 	}
 
 	public void addAccount(String clientName, AccountType type, double initialDeposit) {
-		Client client;
 		try {
-			client = getClient(clientName);
-			Account account = AccountFactory.getInstance().build(type, initialDeposit);
+			Client client = getClient(clientName);
+
+			Account account = null;
+			switch (type) {
+			case EUR:
+				account = AccountEURFactory.getInstance().build(initialDeposit);
+				break;
+			case RON:
+				account = AccountRONFactory.getInstance().build(initialDeposit);
+				break;
+			}
 			client.addAccount(account);
-			log.write("Account added to %s.", clientName);
+			log.write("Account with number %s added to %s.", account.getCode(), client.getName());
 			log.writeLine(account.toString());
 		} catch (Exception e) {
 			log.writeLine(e.getMessage());
