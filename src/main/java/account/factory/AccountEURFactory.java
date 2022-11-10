@@ -1,7 +1,7 @@
 package account.factory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import account.Account;
 import account.types.AccountEUR;
@@ -17,16 +17,16 @@ public class AccountEURFactory extends AccountFactory {
 
 	private static AccountFactory instance = null;
 
-	public static AccountFactory getInstance() {
+	public synchronized static AccountFactory getInstance() {
 		if (instance == null)
 			instance = new AccountEURFactory();
 		return instance;
 	}
 
-	private List<Integer> generatedNumbers;
+	private Set<Integer> generatedNumbers;
 
 	private AccountEURFactory() {
-		generatedNumbers = new ArrayList<Integer>();
+		generatedNumbers = new TreeSet<Integer>();
 	}
 
 	@Override

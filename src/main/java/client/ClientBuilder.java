@@ -19,7 +19,7 @@ public class ClientBuilder {
 	}
 
 	public Client build() {
-		Client c = new Client(name, address, birth);
+		Client c = new ConcreteClient(name, address, birth);
 		for (Account a : accounts)
 			c.addAccount(a);
 		return c;

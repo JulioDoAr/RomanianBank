@@ -1,7 +1,7 @@
 package account;
 
-import account.operations.Operations;
-import account.operations.Transfer;
+import account.operation.Operations;
+import account.operation.Transfer;
 import exceptions.NegativeAmountException;
 import exceptions.NotEnoughAmountException;
 

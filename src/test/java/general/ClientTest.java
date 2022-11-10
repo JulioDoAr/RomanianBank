@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import account.factory.AccountEURFactory;
 import client.Client;
+import client.ClientBuilder;
 import exceptions.NegativeAmountException;
 
 public class ClientTest {
@@ -15,7 +16,7 @@ public class ClientTest {
 
 	@Before
 	public void before() {
-		c = new Client("Name", "Address");
+		c = new ClientBuilder().setName("Name").setAddress("Address").build();
 	}
 
 	@Test

@@ -8,6 +8,7 @@ import account.AccountType;
 import account.factory.AccountEURFactory;
 import account.factory.AccountRONFactory;
 import client.Client;
+import client.ClientBuilder;
 import exceptions.ClientNotFoundException;
 import logger.Logger;
 
@@ -24,7 +25,7 @@ public class Bank {
 	}
 
 	public void addClient(String name, String address) {
-		Client c = new Client(name, address);
+		Client c = new ClientBuilder().setName(name).setAddress(address).build();
 		clients.add(c);
 		log.writeLine("Client added. %s", c.toString());
 	}

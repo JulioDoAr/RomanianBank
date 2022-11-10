@@ -1,7 +1,7 @@
 package account.factory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import account.Account;
 import account.types.AccountRON;
@@ -17,16 +17,16 @@ public class AccountRONFactory extends AccountFactory {
 
 	private static AccountFactory instance = null;
 
-	public static AccountFactory getInstance() {
+	public synchronized static AccountFactory getInstance() {
 		if (instance == null)
 			instance = new AccountRONFactory();
 		return instance;
 	}
 
-	private List<Integer> generatedNumbers;
+	private Set<Integer> generatedNumbers;
 
 	private AccountRONFactory() {
-		generatedNumbers = new ArrayList<Integer>();
+		generatedNumbers = new TreeSet<Integer>();
 	}
 
 	@Override
