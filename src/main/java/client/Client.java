@@ -18,7 +18,7 @@ public interface Client {
 
 	public String getName();
 
-	public void setName(String nume);
+	public void setName(String name);
 
 	public String getAddress();
 
