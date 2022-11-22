@@ -20,7 +20,7 @@ public class Bank {
 
 	private Map<String, BCMediator> mediators;
 	private String bankCode = null;
-	Logger log;
+	private final Logger log;
 
 	public Bank(String bankCode) {
 		log = Logger.getInstance();
@@ -30,7 +30,7 @@ public class Bank {
 
 	public void addClient(String name, String address) {
 		BCMediator mediator = new BCMediatorImpl();
-		Client client = new ClientBuilder().setName(name).setAddress(address).build();
+		Client client = new ClientBuilder().setName(name).setAddress(address).setMediator(mediator).build();
 		mediator.registerBank(this);
 		mediator.registerClient(client);
 		mediators.put(client.getName(), mediator);
