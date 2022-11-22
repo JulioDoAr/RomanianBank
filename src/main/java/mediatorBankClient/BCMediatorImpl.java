@@ -1,6 +1,7 @@
 package mediatorBankClient;
 
 import account.Account;
+import account.AccountType;
 import bank.Bank;
 import client.Client;
 import exceptions.NegativeAmountException;
@@ -33,6 +34,10 @@ public class BCMediatorImpl implements BCMediator {
 
 	public Client getClient() {
 		return client;
+	}
+
+	public void addAccount(AccountType type) {
+		bank.addAccount(client.getName(), type);
 	}
 
 }

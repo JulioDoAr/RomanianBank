@@ -29,8 +29,8 @@ public class Bank {
 	}
 
 	public void addClient(String name, String address) {
-		Client client = new ClientBuilder().setName(name).setAddress(address).build();
 		BCMediator mediator = new BCMediatorImpl();
+		Client client = new ClientBuilder().setName(name).setAddress(address).build();
 		mediator.registerBank(this);
 		mediator.registerClient(client);
 		mediators.put(client.getName(), mediator);

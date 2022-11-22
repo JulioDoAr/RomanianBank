@@ -4,12 +4,15 @@ import java.util.Date;
 import java.util.Map;
 
 import account.Account;
+import account.AccountType;
 import exceptions.AccountNotFoundException;
 import exceptions.NegativeAmountException;
 
 public interface Client {
 
 	void addAccount(Account account);
+
+	void addAccount(AccountType type);
 
 	Account getAccount(String accountCode) throws AccountNotFoundException;
 

@@ -1,6 +1,7 @@
 package mediatorBankClient;
 
 import account.Account;
+import account.AccountType;
 import bank.Bank;
 import client.Client;
 import exceptions.NegativeAmountException;
@@ -14,6 +15,8 @@ public interface BCMediator {
 	Client getClient();
 
 	void addAccount(Account account);
+
+	void addAccount(AccountType type);
 
 	void depose(String account, double deposit) throws NegativeAmountException;
 

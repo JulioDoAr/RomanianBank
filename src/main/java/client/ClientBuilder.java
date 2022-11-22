@@ -6,6 +6,7 @@ import java.util.List;
 
 import account.decorator.AccountImpl;
 import client.decorator.ClientImpl;
+import mediatorBankClient.BCMediator;
 
 public class ClientBuilder {
 
@@ -13,6 +14,7 @@ public class ClientBuilder {
 	private String address;
 	private Date birth;
 	private List<AccountImpl> accounts;
+	private BCMediator mediator;
 
 	public ClientBuilder() {
 		birth = null;
@@ -20,7 +22,7 @@ public class ClientBuilder {
 	}
 
 	public Client build() {
-		Client c = new ClientImpl(name, address, birth);
+		Client c = new ClientImpl(mediator, name, address, birth);
 		for (AccountImpl a : accounts)
 			c.addAccount(a);
 		return c;
@@ -43,6 +45,11 @@ public class ClientBuilder {
 
 	public ClientBuilder setBirth(Date birth) {
 		this.birth = birth;
+		return this;
+	}
+
+	public ClientBuilder setMediator(BCMediator mediator) {
+		this.mediator = mediator;
 		return this;
 	}
 }

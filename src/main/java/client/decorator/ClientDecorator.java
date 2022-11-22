@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Map;
 
 import account.Account;
+import account.AccountType;
 import client.Client;
 import exceptions.AccountNotFoundException;
 import exceptions.NegativeAmountException;
@@ -50,5 +51,9 @@ public class ClientDecorator implements Client {
 
 	public boolean existAccount(String number) {
 		return decorated.existAccount(number);
+	}
+
+	public void addAccount(AccountType type) {
+		decorated.addAccount(type);
 	}
 }

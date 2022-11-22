@@ -5,9 +5,11 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import account.Account;
+import account.AccountType;
 import account.command.impl.AccountDeposeCommand;
 import client.Client;
 import exceptions.NegativeAmountException;
+import mediatorBankClient.BCMediator;
 
 public class ClientImpl implements Client {
 
@@ -15,15 +17,17 @@ public class ClientImpl implements Client {
 	private String address;
 	private Map<String, Account> accounts;
 	private Date birth;
+	private BCMediator mediator;
 
-	public ClientImpl(String name, String address) {
-		this(name, address, null);
+	public ClientImpl(BCMediator mediator, String name, String address) {
+		this(mediator, name, address, null);
 	}
 
-	public ClientImpl(String name, String address, Date birth) {
+	public ClientImpl(BCMediator mediator, String name, String address, Date birth) {
 		this.name = name;
 		this.address = address;
 		this.birth = birth;
+		this.mediator = mediator;
 		accounts = new TreeMap<String, Account>();
 	}
 
@@ -79,6 +83,10 @@ public class ClientImpl implements Client {
 
 	public boolean existAccount(String number) {
 		return accounts.containsKey(number);
+	}
+
+	public void addAccount(AccountType type) {
+		mediator.addAccount(type);
 	}
 
 }
