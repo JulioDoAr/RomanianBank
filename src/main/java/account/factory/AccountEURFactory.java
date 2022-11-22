@@ -3,7 +3,7 @@ package account.factory;
 import java.util.Set;
 import java.util.TreeSet;
 
-import account.Account;
+import account.decorator.AccountImpl;
 import account.types.AccountEUR;
 import exceptions.NegativeAmountException;
 
@@ -41,12 +41,12 @@ public class AccountEURFactory extends AccountFactory {
 	}
 
 	@Override
-	public Account build() throws NegativeAmountException {
+	public AccountImpl build() throws NegativeAmountException {
 		return build(0);
 	}
 
 	@Override
-	public Account build(double initialDeposit) throws NegativeAmountException {
+	public AccountImpl build(double initialDeposit) throws NegativeAmountException {
 		return new AccountEUR(generateAccountNumber(), initialDeposit);
 	}
 

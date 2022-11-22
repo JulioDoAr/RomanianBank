@@ -1,26 +1,32 @@
 package client;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 import account.Account;
+import exceptions.AccountNotFoundException;
+import exceptions.NegativeAmountException;
 
 public interface Client {
 
-	public void addAccount(Account account);
+	void addAccount(Account account);
 
-	public Account getAccount(String accountCode);
+	Account getAccount(String accountCode) throws AccountNotFoundException;
 
-	public List<Account> getAccounts();
+	Map<String, Account> getAccounts();
 
 	@Override
-	public String toString();
+	String toString();
 
-	public String getName();
+	String getName();
 
-	public void setName(String name);
+	void setName(String name);
 
-	public String getAddress();
+	String getAddress();
 
-	public Date getBirth();
+	Date getBirth();
+
+	void depose(String accountNumber, double amount) throws NegativeAmountException;
+
+	boolean existAccount(String number);
 }

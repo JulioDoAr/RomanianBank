@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import account.Account;
 import account.AccountType;
+import bank.Bank;
 import exceptions.ClientNotFoundException;
 import exceptions.NegativeAmountException;
 
@@ -43,7 +44,7 @@ public class BankTest {
 	public void test_addAccountWithMoneyToClient() throws NegativeAmountException, ClientNotFoundException {
 		b.addClient("Name", "Address");
 		b.addAccount("Name", AccountType.EUR, 150);
-		Account a = b.getClient("Name").getAccounts().get(0);
+		Account a = b.getClient("Name").getAccounts().values().iterator().next();
 		double expectedAmount = 150 * a.getInterest() + 150;
 		assertEquals(a.getTotalAmount(), 150 + 150 * a.getInterest(), 0.001);
 	}

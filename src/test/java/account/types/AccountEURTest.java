@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import account.Account;
+import account.decorator.AccountImpl;
 import account.factory.AccountEURFactory;
 import account.factory.AccountFactory;
 import exceptions.NegativeAmountException;
@@ -14,16 +14,16 @@ import exceptions.NegativeAmountException;
 public class AccountEURTest {
 
 	AccountEUR account;
-	AccountFactory builder;
+	private static AccountFactory builder;
 
 	@BeforeClass
-	public void beforeClass() {
+	public static void beforeClass() {
 		builder = AccountEURFactory.getInstance();
 	}
 
 	@Test
 	public void test_CreationWithPositiveAmount() throws NegativeAmountException {
-		Account a = builder.build(457875);
+		AccountImpl a = builder.build(457875);
 		double expectedAmount = 457875 * a.getInterest() + 457875;
 		assertEquals(a.getTotalAmount(), expectedAmount, 0.001);
 	}
@@ -35,14 +35,14 @@ public class AccountEURTest {
 
 	@Test
 	public void test_CreationWithoutAmount() throws NegativeAmountException {
-		Account a = builder.build();
+		AccountImpl a = builder.build();
 		double expectedAmount = 0 * a.getInterest();
 		assertEquals(a.getTotalAmount(), expectedAmount, 0.001);
 	}
 
 	@Test
 	public void test_DeposePositiveAmount() throws NegativeAmountException {
-		Account a = builder.build();
+		AccountImpl a = builder.build();
 		a.depose(100);
 		double expectedAmount = 100 * a.getInterest() + 100;
 		assertEquals(a.getTotalAmount(), expectedAmount, 0.001);
@@ -50,20 +50,20 @@ public class AccountEURTest {
 
 	@Test(expected = NegativeAmountException.class)
 	public void test_DeposeNegativeAmount() throws NegativeAmountException {
-		Account a = builder.build();
+		AccountImpl a = builder.build();
 		a.depose(-100);
 	}
 
 	@Test
 	public void test_AccountCodeLenght() throws NegativeAmountException {
-		Account a = builder.build();
+		AccountImpl a = builder.build();
 		String code = a.getCode();
 		assertEquals(code.length(), 6);
 	}
 
 	@Test
 	public void test_AccountCode_StartsWithEUR() throws NegativeAmountException {
-		Account a = builder.build();
+		AccountImpl a = builder.build();
 		String code = a.getCode();
 		assertTrue(code.startsWith("EUR"));
 	}

@@ -5,4 +5,8 @@
 
 # Things to do
 
-1. To Logger -> add method "write(Object obj)" and "writeLine(Object obj)"
+- [X] Implement Decorator pattern in order to decorate client/account with different promotions like: life ensures, children accounts, economy account etc
+
+- [] Implement Mediator pattern in order to allow to the bank to communicate with the clients, or bank client to communicate to a bank officer
+
+- [] Use Commander pattern in order to realise different client or account operations

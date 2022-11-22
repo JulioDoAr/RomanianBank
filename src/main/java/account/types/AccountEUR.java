@@ -1,9 +1,9 @@
 package account.types;
 
-import account.Account;
+import account.decorator.AccountImpl;
 import exceptions.NegativeAmountException;
 
-public class AccountEUR extends Account {
+public class AccountEUR extends AccountImpl {
 
 	public AccountEUR(String number, double suma) throws NegativeAmountException {
 		super(number, suma);

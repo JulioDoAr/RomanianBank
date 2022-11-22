@@ -1,13 +1,16 @@
 package client.decorator;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 import account.Account;
 import client.Client;
+import exceptions.AccountNotFoundException;
+import exceptions.NegativeAmountException;
 
-public abstract class ClientDecorator implements Client {
-	Client decorated;
+public class ClientDecorator implements Client {
+
+	protected Client decorated;
 
 	public ClientDecorator(Client decorated) {
 		this.decorated = decorated;
@@ -17,25 +20,20 @@ public abstract class ClientDecorator implements Client {
 		decorated.addAccount(account);
 	}
 
-	public Account getAccount(String accountCode) {
+	public Account getAccount(String accountCode) throws AccountNotFoundException {
 		return decorated.getAccount(accountCode);
 	}
 
-	public List<Account> getAccounts() {
+	public Map<String, Account> getAccounts() {
 		return decorated.getAccounts();
-	}
-
-	@Override
-	public String toString() {
-		return decorated.toString();
 	}
 
 	public String getName() {
 		return decorated.getName();
 	}
 
-	public void setName(String name) {
-		decorated.setName(name);
+	public void setName(String nume) {
+		decorated.setName(nume);
 	}
 
 	public String getAddress() {
@@ -44,5 +42,13 @@ public abstract class ClientDecorator implements Client {
 
 	public Date getBirth() {
 		return decorated.getBirth();
+	}
+
+	public void depose(String accountNumber, double amount) throws NegativeAmountException {
+		decorated.depose(accountNumber, amount);
+	}
+
+	public boolean existAccount(String number) {
+		return decorated.existAccount(number);
 	}
 }
