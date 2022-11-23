@@ -8,6 +8,7 @@ import account.AccountType;
 import client.Client;
 import exceptions.AccountNotFoundException;
 import exceptions.NegativeAmountException;
+import mediatorBankClient.BCMediator;
 
 public class ClientDecorator implements Client {
 
@@ -55,5 +56,9 @@ public class ClientDecorator implements Client {
 
 	public void addAccount(AccountType type) {
 		decorated.addAccount(type);
+	}
+
+	public void setMediator(BCMediator mediator) {
+		decorated.setMediator(mediator);
 	}
 }

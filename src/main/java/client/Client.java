@@ -7,6 +7,7 @@ import account.Account;
 import account.AccountType;
 import exceptions.AccountNotFoundException;
 import exceptions.NegativeAmountException;
+import mediatorBankClient.BCMediator;
 
 public interface Client {
 
@@ -32,4 +33,6 @@ public interface Client {
 	void depose(String accountNumber, double amount) throws NegativeAmountException;
 
 	boolean existAccount(String number);
+
+	void setMediator(BCMediator mediator);
 }

@@ -45,7 +45,7 @@ CREATE TABLE 'Account' (
 	CONSTRAINT 'Account_AccountType' FOREIGN KEY ('accountTypeId') REFERENCES 'AccountType' ('id') ON UPDATE NO ACTION ON DELETE CASCADE
 );
 
-INSERT INTO 'Account' ('code', 'amount','clientId','accountTypeId') VALUES ('123', 200, 1, 1);
-INSERT INTO 'Account' ('code', 'amount','clientId','accountTypeId') VALUES ('123', 400, 1, 2);
-INSERT INTO 'Account' ('code', 'amount','clientId','accountTypeId') VALUES ('123', 200, 2, 2);
-INSERT INTO 'Account' ('code', 'amount','clientId','accountTypeId') VALUES ('123', 700, 3, 1);
+INSERT INTO 'Account' ('code', 'amount','clientId','accountTypeId') VALUES ('EUR001', 200, 1, 1);
+INSERT INTO 'Account' ('code', 'amount','clientId','accountTypeId') VALUES ('RON001', 400, 1, 2);
+INSERT INTO 'Account' ('code', 'amount','clientId','accountTypeId') VALUES ('RON002', 200, 2, 2);
+INSERT INTO 'Account' ('code', 'amount','clientId','accountTypeId') VALUES ('EUR002', 700, 3, 1);

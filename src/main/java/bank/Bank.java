@@ -1,5 +1,7 @@
 package bank;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -15,24 +17,39 @@ import exceptions.NegativeAmountException;
 import logger.Logger;
 import mediatorBankClient.BCMediator;
 import mediatorBankClient.BCMediatorImpl;
+import persistance.service.ClientService;
 
 public class Bank {
 
 	private Map<String, BCMediator> mediators;
-	private String bankCode = null;
+	private String code = null;
 	private final Logger log;
+	private ClientService clientService;
 
-	public Bank(String bankCode) {
+	public Bank(String code) {
 		log = Logger.getInstance();
-		this.bankCode = bankCode;
+		this.code = code;
+		List<Client> clients = clientService.getAllByCode();
 		mediators = new TreeMap<String, BCMediator>();
+		for (Client client : clients)
+			addClient(client);
 	}
 
 	public void addClient(String name, String address) {
+		addClient(name, address, null);
+	}
+
+	public void addClient(String name, String address, Date birth) {
+		Client client = new ClientBuilder().setName(name).setAddress(address).setBirth(birth).build();
+		clientService.create(client);
+		addClient(client);
+	}
+
+	public void addClient(Client client) {
 		BCMediator mediator = new BCMediatorImpl();
-		Client client = new ClientBuilder().setName(name).setAddress(address).setMediator(mediator).build();
 		mediator.registerBank(this);
 		mediator.registerClient(client);
+		client.setMediator(mediator);
 		mediators.put(client.getName(), mediator);
 		log.writeLine("Client added. %s", client.toString());
 	}
@@ -84,7 +101,7 @@ public class Bank {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Bank [code=");
-		sb.append(bankCode);
+		sb.append(code);
 		sb.append(", clients=");
 		sb.append(mediators.keySet());
 		sb.append("]");

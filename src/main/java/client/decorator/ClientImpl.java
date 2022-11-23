@@ -10,6 +10,7 @@ import account.command.impl.AccountDeposeCommand;
 import client.Client;
 import exceptions.NegativeAmountException;
 import mediatorBankClient.BCMediator;
+import persistance.service.AccountService;
 
 public class ClientImpl implements Client {
 
@@ -18,6 +19,7 @@ public class ClientImpl implements Client {
 	private Map<String, Account> accounts;
 	private Date birth;
 	private BCMediator mediator;
+	private AccountService accountService;
 
 	public ClientImpl(BCMediator mediator, String name, String address) {
 		this(mediator, name, address, null);
@@ -29,10 +31,16 @@ public class ClientImpl implements Client {
 		this.birth = birth;
 		this.mediator = mediator;
 		accounts = new TreeMap<String, Account>();
+		accounts = accountService.getAllAccountsByClientName(name);
 	}
 
 	public void addAccount(Account account) {
 		accounts.put(account.getCode(), account);
+		accountService.create(account, name);
+	}
+
+	public void addAccount(AccountType type) {
+		mediator.addAccount(type);
 	}
 
 	public Account getAccount(String accountCode) {
@@ -85,8 +93,8 @@ public class ClientImpl implements Client {
 		return accounts.containsKey(number);
 	}
 
-	public void addAccount(AccountType type) {
-		mediator.addAccount(type);
+	public void setMediator(BCMediator mediator) {
+		this.mediator = mediator;
 	}
 
 }

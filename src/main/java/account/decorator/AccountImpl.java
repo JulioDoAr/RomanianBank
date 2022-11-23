@@ -3,13 +3,14 @@ package account.decorator;
 import account.Account;
 import exceptions.NegativeAmountException;
 import exceptions.NotEnoughAmountException;
-import mediatorBankClient.BCMediator;
+import persistance.service.AccountService;
 
 public abstract class AccountImpl implements Account {
 
+	AccountService accountService;
+
 	protected String code = null;
 	protected double amount = 0;
-	protected BCMediator mediator = null;
 
 	protected AccountImpl(String code, double initialDeposit) throws NegativeAmountException {
 		this.code = code;
@@ -24,6 +25,7 @@ public abstract class AccountImpl implements Account {
 		if (amount < 0)
 			throw new NegativeAmountException();
 		this.amount += amount;
+		accountService.updateAmountByCode(this);
 	}
 
 	public void retrieve(double amount) throws NegativeAmountException, NotEnoughAmountException {
@@ -32,6 +34,7 @@ public abstract class AccountImpl implements Account {
 		if (this.amount < amount)
 			throw new NotEnoughAmountException();
 		this.amount -= amount;
+		accountService.updateAmountByCode(this);
 	}
 
 	@Override
