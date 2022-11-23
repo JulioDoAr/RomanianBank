@@ -11,7 +11,7 @@ public class LifeEnsuresAccount extends AccountDecorator {
 
 	@Override
 	public String toString() {
-		return String.format("%s\nDecorated with Life Ensures Account", super.toString());
+		return String.format("%s\nDecorated with Life Ensures Account", decorated.toString());
 	}
 
 }

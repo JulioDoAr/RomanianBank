@@ -11,6 +11,6 @@ public class ChildrenClient extends ClientDecorator {
 
 	@Override
 	public String toString() {
-		return String.format("%s\nDecorated with Children Client", super.toString());
+		return String.format("%s\nDecorated with Children Client", decorated.toString());
 	}
 }

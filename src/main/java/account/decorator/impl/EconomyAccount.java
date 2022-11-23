@@ -11,7 +11,7 @@ public class EconomyAccount extends AccountDecorator {
 
 	@Override
 	public String toString() {
-		return String.format("%s\nDecorated with Economy Account", super.toString());
+		return String.format("%s\nDecorated with Economy Account", decorated.toString());
 	}
 
 }
