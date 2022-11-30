@@ -4,6 +4,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import account.decorator.AccountImpl;
 import exceptions.NegativeAmountException;
+import persistance.entity.AccountEntity;
 
 public abstract class AccountFactory {
 
@@ -18,4 +19,6 @@ public abstract class AccountFactory {
 	}
 
 	public abstract AccountImpl build(double initialDeposit) throws NegativeAmountException;
+
+	public abstract AccountImpl build(AccountEntity entity) throws NegativeAmountException;
 }

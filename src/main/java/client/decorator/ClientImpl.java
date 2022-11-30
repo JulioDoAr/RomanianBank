@@ -2,7 +2,6 @@ package client.decorator;
 
 import java.util.Date;
 import java.util.Map;
-import java.util.TreeMap;
 
 import account.Account;
 import account.AccountType;
@@ -11,6 +10,7 @@ import client.Client;
 import exceptions.NegativeAmountException;
 import mediatorBankClient.BCMediator;
 import persistance.service.AccountService;
+import persistance.service.AccountServiceImpl;
 
 public class ClientImpl implements Client {
 
@@ -30,26 +30,29 @@ public class ClientImpl implements Client {
 		this.address = address;
 		this.birth = birth;
 		this.mediator = mediator;
-		accounts = new TreeMap<String, Account>();
+		this.accountService = AccountServiceImpl.getInstance();
+
 		accounts = accountService.getAllAccountsByClientName(name);
 	}
 
+	@Override
 	public void addAccount(Account account) {
 		accounts.put(account.getCode(), account);
 		accountService.create(account, name);
 	}
 
+	@Override
 	public void addAccount(AccountType type) {
 		mediator.addAccount(type);
 	}
 
+	@Override
 	public Account getAccount(String accountCode) {
-		Account account = accounts.get(accountCode);
-		if (account != null)
-			return account;
-		return null;
+		return accounts.get(accountCode);
+
 	}
 
+	@Override
 	public Map<String, Account> getAccounts() {
 		return accounts;
 	}
@@ -67,32 +70,39 @@ public class ClientImpl implements Client {
 		return sb.toString();
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public void setName(String nume) {
 		this.name = nume;
 	}
 
+	@Override
 	public String getAddress() {
 		return address;
 	}
 
+	@Override
 	public Date getBirth() {
 		return birth;
 	}
 
+	@Override
 	public void depose(String accountNumber, double amount) throws NegativeAmountException {
 		Account account = getAccount(accountNumber);
 		AccountDeposeCommand command = new AccountDeposeCommand(account, amount);
 		command.execute();
 	}
 
+	@Override
 	public boolean existAccount(String number) {
 		return accounts.containsKey(number);
 	}
 
+	@Override
 	public void setMediator(BCMediator mediator) {
 		this.mediator = mediator;
 	}

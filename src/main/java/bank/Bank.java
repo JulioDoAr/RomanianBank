@@ -17,20 +17,25 @@ import exceptions.NegativeAmountException;
 import logger.Logger;
 import mediatorBankClient.BCMediator;
 import mediatorBankClient.BCMediatorImpl;
+import persistance.service.AccountService;
+import persistance.service.AccountServiceImpl;
 import persistance.service.ClientService;
+import persistance.service.ClientServiceImpl;
 
 public class Bank {
 
-	private Map<String, BCMediator> mediators;
-	private String code = null;
-	private final Logger log;
+	private final Logger log = Logger.getInstance();
+	private Map<String, BCMediator> mediators = new TreeMap<String, BCMediator>();
 	private ClientService clientService;
+	private AccountService accountService;
+	private String code;
 
 	public Bank(String code) {
-		log = Logger.getInstance();
 		this.code = code;
-		List<Client> clients = clientService.getAllByCode();
-		mediators = new TreeMap<String, BCMediator>();
+		clientService = ClientServiceImpl.getInstance();
+		accountService = AccountServiceImpl.getInstance();
+
+		List<Client> clients = clientService.getAllByBankId(code);
 		for (Client client : clients)
 			addClient(client);
 	}
@@ -40,9 +45,13 @@ public class Bank {
 	}
 
 	public void addClient(String name, String address, Date birth) {
-		Client client = new ClientBuilder().setName(name).setAddress(address).setBirth(birth).build();
-		clientService.create(client);
-		addClient(client);
+		if (mediators.containsKey(name)) {
+			log.write("Already exist a client with name '%s'", name);
+		} else {
+			Client client = new ClientBuilder().setName(name).setAddress(address).setBirth(birth).build();
+			clientService.create(client, this);
+			addClient(client);
+		}
 	}
 
 	public void addClient(Client client) {
@@ -68,9 +77,8 @@ public class Bank {
 
 	public String addAccount(String clientName, AccountType type, double initialDeposit) {
 		Account account = null;
+		BCMediator mediator = mediators.get(clientName);
 		try {
-			BCMediator mediator = mediators.get(clientName);
-
 			switch (type) {
 			case EUR:
 				account = AccountEURFactory.getInstance().build(initialDeposit);
@@ -79,12 +87,11 @@ public class Bank {
 				account = AccountRONFactory.getInstance().build(initialDeposit);
 				break;
 			}
-			mediator.addAccount(account);
 			log.write("Account with number %s added to %s.", account.getCode(), clientName);
-			log.writeLine(account.toString());
 		} catch (Exception e) {
-			log.writeLine(e.getMessage());
+			e.printStackTrace();
 		}
+		mediator.addAccount(account);
 		return account.getCode();
 	}
 
@@ -95,6 +102,10 @@ public class Bank {
 		} catch (NegativeAmountException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String getCode() {
+		return code;
 	}
 
 	@Override

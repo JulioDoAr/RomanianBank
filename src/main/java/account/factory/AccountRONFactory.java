@@ -3,9 +3,11 @@ package account.factory;
 import java.util.Set;
 import java.util.TreeSet;
 
+import account.AccountType;
 import account.decorator.AccountImpl;
 import account.types.AccountRON;
 import exceptions.NegativeAmountException;
+import persistance.entity.AccountEntity;
 
 /**
  * Singleton
@@ -47,7 +49,12 @@ public class AccountRONFactory extends AccountFactory {
 
 	@Override
 	public AccountImpl build(double initialDeposit) throws NegativeAmountException {
-		return new AccountRON(generateAccountNumber(), initialDeposit);
+		return new AccountRON(generateAccountNumber(), initialDeposit, AccountType.RON);
+	}
+
+	@Override
+	public AccountImpl build(AccountEntity entity) throws NegativeAmountException {
+		return new AccountRON(entity.getCode(), entity.getAmount(), AccountType.RON);
 	}
 
 }

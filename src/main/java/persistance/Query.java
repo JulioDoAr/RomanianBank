@@ -6,7 +6,7 @@ public class Query {
 	public static final String DROP_ACCOUNTTYPE = "DROP Table IF EXISTS 'AccountType';";
 	public static final String DROP_CLIENT = "DROP Table IF EXISTS 'Client';";
 	public static final String DROP_BANK = "DROP Table IF EXISTS 'Bank';";
-	public static final String CREATE_ACCOUNT = "CREATE TABLE 'Account' ('id' INTEGER,'code' TEXT NOT NULL,'amount' REAL NOT NULL DEFAULT 0,'clientId' INTEGER NOT NULL,'accountTypeId' INTEGER NOT NULL,PRIMARY KEY ('id'),CONSTRAINT 'Account_Client' FOREIGN KEY ('clientId') REFERENCES 'Client' ('id') ON UPDATE NO ACTION ON DELETE CASCADE,CONSTRAINT 'Account_AccountType' FOREIGN KEY ('accountTypeId') REFERENCES 'AccountType' ('id') ON UPDATE NO ACTION ON DELETE CASCADE);";
+	public static final String CREATE_ACCOUNT = "CREATE TABLE 'Account' ('id' INTEGER,'code' TEXT NOT NULL,'amount' REAL NOT NULL DEFAULT 0,'clientId' INTEGER NOT NULL,'accountTypeId' INTEGER NOT NULL,PRIMARY KEY ('id'),CONSTRAINT 'Account_Client' FOREIGN KEY ('clientId') REFERENCES 'Client' ('id') ON UPDATE NO ACTION ON DELETE CASCADE);";
 	public static final String CREATE_ACCOUNTTYPE = "CREATE TABLE 'AccountType' ('id' INTEGER,'name' TEXT NOT NULL,PRIMARY KEY ('id'));";
 	public static final String CREATE_CLIENT = "CREATE Table 'Client' ('id' INTEGER,'name' TEXT NOT NULL,'address' TEXT NOT NULL,'birth' DATE NULL DEFAULT NULL,'bankId' INTEGER NOT NULL,PRIMARY KEY ('id'),CONSTRAINT 'Client_Bank' FOREIGN KEY ('bankId') REFERENCES 'Bank' ('id') ON UPDATE NO ACTION ON DELETE CASCADE);";
 	public static final String CREATE_BANK = "CREATE Table 'Bank' ('id' INTEGER, 'name' TEXT NOT NULL, PRIMARY KEY ('id'));";

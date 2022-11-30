@@ -1,11 +1,16 @@
 package persistance.entity;
 
+import account.AccountType;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Builder
-public class Account {
+@NoArgsConstructor
+@AllArgsConstructor
+public class AccountEntity {
 
 	@Getter
 	@Setter
@@ -25,5 +30,5 @@ public class Account {
 
 	@Getter
 	@Setter
-	private int accountTypeId;
+	private AccountType accountTypeId;
 }

@@ -2,14 +2,15 @@ package persistance.service;
 
 import java.util.List;
 
+import bank.Bank;
 import client.Client;
 
 public interface ClientService {
 
-	Client create(Client client);
+	void create(Client client, Bank bank);
 
 	Client findByName(String name);
 
-	List<Client> getAllByCode();
+	List<Client> getAllByBankId(String code);
 
 }

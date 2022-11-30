@@ -4,6 +4,8 @@ import bank.Bank;
 
 public interface BankService {
 
-	Bank getBankByCode(String string);
+	Bank getBankByCode(String code);
+
+	Bank getOrCreate(String code);
 
 }

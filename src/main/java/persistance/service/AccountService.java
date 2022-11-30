@@ -3,7 +3,6 @@ package persistance.service;
 import java.util.Map;
 
 import account.Account;
-import account.decorator.AccountImpl;
 
 public interface AccountService {
 
@@ -11,6 +10,6 @@ public interface AccountService {
 
 	Map<String, Account> getAllAccountsByClientName(String name);
 
-	void updateAmountByCode(AccountImpl accountImpl);
+	void updateAmountByCode(Account account);
 
 }

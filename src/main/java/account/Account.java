@@ -13,8 +13,12 @@ public interface Account {
 
 	public double getInterest();
 
+	public double getAmount();
+
 	@Override
 	public String toString();
 
 	public String getCode();
+
+	public AccountType getType();
 }

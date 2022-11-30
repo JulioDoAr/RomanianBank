@@ -1,11 +1,15 @@
 package persistance.repository;
 
-import client.Client;
+import java.util.List;
+
+import persistance.entity.ClientEntity;
 
 public interface ClientRepository {
 
-	boolean create(Client client);
+	void create(ClientEntity clientEntity);
 
-	Client findByName(String name);
+	ClientEntity findByName(String name);
+
+	List<ClientEntity> getAllByBankId(int bankId);
 
 }

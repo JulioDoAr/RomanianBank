@@ -2,25 +2,31 @@ package e2e;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Locale;
+
 import org.junit.After;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import account.AccountType;
 import bank.Bank;
 import logger.ConsoleOutputOperation;
 import logger.Logger;
 import persistance.service.BankService;
+import persistance.service.BankServiceImpl;
 
 public class MainTest {
-	Logger log;
+	private static Logger log;
 
-	BankService bankService;
+	private static BankService bankService;
 
-	@Before
-	public void before() {
+	@BeforeClass
+	public static void before() {
+		Locale.setDefault(Locale.ENGLISH);
 		log = Logger.getInstance();
 		log.reset();
 		log.addOutputOperation(new ConsoleOutputOperation());
+		bankService = BankServiceImpl.getInstance();
 	}
 
 	@After
@@ -33,28 +39,30 @@ public class MainTest {
 		/**
 		 * Create BCR bank with 2 clients
 		 */
-		Bank bcr = bankService.getBankByCode("Banca BCR");
+		Bank bcr = bankService.getOrCreate("Banca BCR");
 
-//		bcr.addClient("Ionescu Ion", "Timisoara");
-//		String ionescuEurAccount = bcr.addAccount("Ionescu Ion", AccountType.EUR, 200.9);
-//		String ionescuRonAccount = bcr.addAccount("Ionescu Ion", AccountType.RON, 400);
+		String ionescu = "Ionescu Ion";
+		bcr.addClient(ionescu, "Timisoara");
+		String ionescuEurAccount = bcr.addAccount(ionescu, AccountType.EUR, 200.9);
+		String ionescuRonAccount = bcr.addAccount(ionescu, AccountType.RON, 400);
 
-//		bcr.addClient("Marinescu Marin", "Timisoara");
-//		String marinescuRonAccount = bcr.addAccount("Marinescu Marin", AccountType.RON, 200);
+		String marinescu = "Marinescu Marin";
+		bcr.addClient(marinescu, "Timisoara");
+		String marinescuRonAccount = bcr.addAccount(marinescu, AccountType.RON, 200);
 
 		log.writeLine(bcr.toString());
 
-		bcr.deposit("Marinescu Marin", 400, "RON002");
+		bcr.deposit(marinescu, 400, marinescuRonAccount);
 		log.writeLine(bcr.toString());
-		bcr.retrieve("Marinescu Marin", 70, "RON002");
+		bcr.retrieve(marinescu, 70, marinescuRonAccount);
 		log.writeLine(bcr.toString());
-		bcr.transfer("Marinescu Marin", "Ionescu Ion", 50.0, "RON002", "RON001");
+		bcr.transfer(marinescu, ionescu, 50.0, marinescuRonAccount, ionescuRonAccount);
 		log.writeLine(bcr.toString());
 
 		/**
 		 * Create bank CEC with one client
 		 */
-		Bank cec = bankService.getBankByCode("Banca CEC");
+		Bank cec = bankService.getOrCreate("Banca CEC");
 
 		log.writeLine(cec.toString());
 
