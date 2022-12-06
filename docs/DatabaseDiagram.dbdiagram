@@ -12,16 +12,10 @@ Table User {
 Table Account {
   id int [pk, increment]
   amount float
-  name string
+  code string
   owner int
   type int
  }
- 
-Table AccountType {
-  id int [pk, increment]
-  name varchar
-}
 
 Ref: User.id < Account.owner
-Ref: AccountType.id < Account.type
 Ref: User.bank < Bank.id

@@ -2,6 +2,7 @@ package persistance.service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import bank.Bank;
 import client.Client;
@@ -67,8 +68,8 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	public List<Client> getAllByBankId(String code) {
 		BankEntity bank = bankRepository.getBankByCode(code);
-
-		return clientRepository.getAllByBankId(bank.getId()).stream().map(ClientServiceImpl::entityToClient).toList();
+		return clientRepository.getAllByBankId(bank.getId()).stream().map(ClientServiceImpl::entityToClient)
+				.collect(Collectors.toList());
 	}
 
 	private static Client entityToClient(ClientEntity entity) {
